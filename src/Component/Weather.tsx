@@ -1,9 +1,38 @@
+// Weather.tsx
 import React from "react";
 
-const Weather = ({ weatherData }) => {
-  console.log(weatherData);
+interface WeatherData {
+  weather?: {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }[];
+  main?: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    humidity: number;
+  };
+  wind?: {
+    speed: number;
+    deg: number;
+  };
+  sys?: {
+    country: string;
+  };
+  name?: string;
+}
+
+interface WeatherProps {
+  weatherData: WeatherData;
+}
+
+const Weather: React.FC<WeatherProps> = ({ weatherData }) => {
   return (
-    <div className="flex  p-4">
+    <div className="flex p-4">
       {weatherData.weather ? (
         <div className="max-w-md w-full bg-white shadow-3xl rounded-xl p-7 m-5 sm:m-auto relative">
           <div className="absolute inset-0 bg-gradient-to-t from-blue-600 to-transparent opacity-60 rounded-xl"></div>
@@ -11,7 +40,7 @@ const Weather = ({ weatherData }) => {
             <div className="w-full sm:w-1/2 flex flex-col justify-between items-start my-4">
               <div>
                 <p className="text-xl font-bold mt-10 text-gray-500">
-                  {weatherData.name}, {weatherData.sys.country}
+                  {weatherData.name}, {weatherData.sys?.country}
                 </p>
                 <p className="text-sm text-gray-700">
                   {weatherData.weather[0].description}
@@ -19,7 +48,7 @@ const Weather = ({ weatherData }) => {
               </div>
               <div>
                 <h1 className="text-4xl sm:text-6xl mb-10 font-semibold text-white">
-                  {weatherData.main.temp.toFixed()} °C
+                  {weatherData.main?.temp?.toFixed()} °C
                 </h1>
               </div>
             </div>
@@ -35,25 +64,25 @@ const Weather = ({ weatherData }) => {
                 <div className="flex justify-between gap-x-16">
                   <p className="text-gray-700">Feels Like</p>
                   <p className="font-bold text-gray-900">
-                    {weatherData.main.feels_like.toFixed()} °C
+                    {weatherData.main?.feels_like?.toFixed()} °C
                   </p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-gray-700">Humidity</p>
                   <p className="font-bold text-gray-900">
-                    {weatherData.main.humidity}%
+                    {weatherData.main?.humidity}%
                   </p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-gray-700">Wind Speed</p>
                   <p className="font-bold text-gray-900">
-                    {weatherData.wind.speed.toFixed()} KPH
+                    {weatherData.wind?.speed?.toFixed()} KPH
                   </p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-gray-700">Pressure</p>
                   <p className="font-bold text-gray-900">
-                    {weatherData.main.pressure.toFixed()} hPa
+                    {weatherData.main?.pressure?.toFixed()} hPa
                   </p>
                 </div>
               </div>
