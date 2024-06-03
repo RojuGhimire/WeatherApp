@@ -1,22 +1,23 @@
 import { useState } from "react";
 import "./App.css";
-import axios, { Axios } from "axios";
+import axios from "axios";
+import Weather from "./Component/Weather";
 
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
 
   const API_KEY = "031f1e4a54bdf90b5c8ae0dd8149ef17";
-  const url = `https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=${location}&appid=${API_KEY}`;
- const searchLocation = (e) => {
-  if (e.key === "Enter"){
-    axios.get(url)
-    .then((response) =>{
-      setData(response.data)
-      console.log(response.data)
-    })
-  }
- }
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${API_KEY}
+ `;
+  const searchLocation = (e) => {
+    if (e.key === "Enter") {
+      axios.get(url).then((response) => {
+        setData(response.data);
+        console.log(response.data);
+      });
+    }
+  };
   return (
     <div>
       <div className="w-full h-full relative">
@@ -31,6 +32,7 @@ function App() {
           />
         </div>
       </div>
+      <Weather weatherData = {data} />
     </div>
   );
 }
